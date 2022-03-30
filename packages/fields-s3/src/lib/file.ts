@@ -25,6 +25,7 @@ const S3FileFieldInput = graphql.inputObject({
 const fileOutputFields = graphql.fields<Omit<FileData, 'type'>>()({
   filename: graphql.field({ type: graphql.nonNull(graphql.String) }),
   filesize: graphql.field({ type: graphql.nonNull(graphql.Int) }),
+  originalFilename: graphql.field({ type: graphql.String }),
   ref: graphql.field({
     type: graphql.nonNull(graphql.String),
     resolve(data) {
@@ -56,7 +57,7 @@ const S3FileFieldOutputType = graphql.object<Omit<FileData, 'type'>>()({
 function createInputResolver(config: S3Config) {
   return async function inputResolver(data: S3FieldInputType) {
     if (data === null || data === undefined) {
-      return { filename: data, filesize: data };
+      return { filename: data, filesize: data, originalFilename: data };
     }
 
     if (data.ref) {
@@ -94,6 +95,7 @@ export const s3File =
       fields: {
         filename: { kind: 'scalar', scalar: 'String', mode: 'optional' },
         filesize: { kind: 'scalar', scalar: 'Int', mode: 'optional' },
+        originalFilename: { kind: 'scalar', scalar: 'String', mode: 'optional' },
       },
     })({
       ...config,
@@ -109,11 +111,11 @@ export const s3File =
       },
       output: graphql.field({
         type: S3FileFieldOutput,
-        resolve({ value: { filename, filesize } }) {
+        resolve({ value: { filename, filesize, originalFilename } }) {
           if (filename === null || filesize === null) {
             return null;
           }
-          return { filename, filesize };
+          return { filename, filesize, originalFilename };
         },
       }),
       unreferencedConcreteInterfaceImplementations: [S3FileFieldOutputType],

@@ -12,12 +12,14 @@ export type ImageData = {
   type: 'image';
   id: string;
   filesize: number;
+  originalFilename: string | null;
 } & ImageMetadata;
 
 export type FileData = {
   type: 'file';
   filename: string;
   filesize: number;
+  originalFilename: string | null;
 };
 
 export type S3DataType = FileData | ImageData;

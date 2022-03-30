@@ -28,7 +28,7 @@ const S3FieldInput = graphql.inputObject({
 function createInputResolver(config: S3Config) {
   return async function inputResolver(data: S3FieldInputType) {
     if (data === null || data === undefined) {
-      return { extension: data, filesize: data, height: data, id: data, width: data };
+      return { extension: data, filesize: data, originalFileName: data, height: data, id: data, width: data };
     }
 
     if (data.ref) {
@@ -49,6 +49,7 @@ const _fieldConfigs: { [key: string]: S3Config } = {};
 const imageOutputFields = graphql.fields<Omit<ImageData, 'type'>>()({
   id: graphql.field({ type: graphql.nonNull(graphql.ID) }),
   filesize: graphql.field({ type: graphql.nonNull(graphql.Int) }),
+  originalFilename: graphql.field({ type: graphql.String }),
   width: graphql.field({ type: graphql.nonNull(graphql.Int) }),
   height: graphql.field({ type: graphql.nonNull(graphql.Int) }),
   extension: graphql.field({ type: graphql.nonNull(ImageExtensionEnum) }),
@@ -100,6 +101,7 @@ export const s3Image =
       fields: {
         filesize: { kind: 'scalar', scalar: 'Int', mode: 'optional' },
         extension: { kind: 'scalar', scalar: 'String', mode: 'optional' },
+        originalFilename: { kind: 'scalar', scalar: 'String', mode: 'optional' },
         width: { kind: 'scalar', scalar: 'Int', mode: 'optional' },
         height: { kind: 'scalar', scalar: 'Int', mode: 'optional' },
         id: { kind: 'scalar', scalar: 'String', mode: 'optional' },
@@ -118,7 +120,7 @@ export const s3Image =
       },
       output: graphql.field({
         type: S3ImageFieldOutput,
-        resolve({ value: { extension, filesize, height, width, id } }) {
+        resolve({ value: { extension, filesize, originalFilename, height, width, id } }) {
           if (
             extension === null ||
             !isValidImageExtension(extension) ||
@@ -129,7 +131,7 @@ export const s3Image =
           ) {
             return null;
           }
-          return { extension, filesize, height, width, id };
+          return { extension, filesize, originalFilename, height, width, id };
         },
       }),
       unreferencedConcreteInterfaceImplementations: [S3ImageFieldOutputType],

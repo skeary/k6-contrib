@@ -232,7 +232,7 @@ function ImgView({
                   Copy Ref
                 </Button>
               </Stack>
-              <Text size="xsmall">{`${value.data.width} x ${value.data.height} (${bytes(
+              <Text size="xsmall">{value.data.originalFilename && `${value.data.originalFilename} - `}{`${value.data.width} x ${value.data.height} (${bytes(
                 value.data.filesize
               )})`}</Text>
             </Stack>

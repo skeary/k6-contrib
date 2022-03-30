@@ -199,7 +199,7 @@ function FileView({
                   Copy Ref
                 </Button>
               </Stack>
-              <Text size="xsmall">{bytes(value.data.filesize)}</Text>
+              <Text size="xsmall">{value.data.originalFilename && `${value.data.originalFilename} - `}{bytes(value.data.filesize)}</Text>
             </Stack>
           )}
           <Stack across gap="small" align="center">

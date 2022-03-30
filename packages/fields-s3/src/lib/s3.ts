@@ -107,6 +107,7 @@ export const getDataFromStream = async (
     type,
     id,
     filename,
+    originalFilename,
     ...metadata,
   };
 
@@ -138,9 +139,9 @@ export const getDataFromStream = async (
         })
         .promise();
       filesize = head.ContentLength || 0;
-      return { filename, filesize };
+      return { filename, filesize, originalFilename };
     }
-    return { id, ...metadata };
+    return { id, ...metadata, originalFilename };
   } catch (error) {
     stream.destroy();
     throw error;

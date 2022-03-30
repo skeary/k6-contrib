@@ -47,6 +47,7 @@ type FileData = {
   ref: string;
   filesize: number;
   filename: string;
+  originalFilename: string | null;
 };
 
 export type FileValue =
@@ -83,6 +84,7 @@ export const controller = (config: FieldControllerConfig): FileController => {
         filename
         ref
         filesize
+        originalFilename
       }`,
     defaultValue: { kind: 'empty' },
     deserialize(item) {
@@ -95,6 +97,7 @@ export const controller = (config: FieldControllerConfig): FileController => {
           filename: value.filename,
           ref: value.ref,
           filesize: value.filesize,
+          originalFilename: value.originalFilename,
         },
       };
     },

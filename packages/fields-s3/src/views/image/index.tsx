@@ -53,6 +53,7 @@ type ImageData = {
   filesize: number;
   extension: string;
   id: string;
+  originalFilename: string | null;
 };
 
 export type ImageValue =
@@ -92,6 +93,7 @@ export const controller = (config: FieldControllerConfig): ImageController => {
         width
         height
         filesize
+        originalFilename
       }`,
     defaultValue: { kind: 'empty' },
     deserialize(item) {
@@ -107,6 +109,7 @@ export const controller = (config: FieldControllerConfig): ImageController => {
           width: value.width,
           height: value.height,
           filesize: value.filesize,
+          originalFilename: value.originalFilename,
         },
       };
     },
