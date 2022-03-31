@@ -1,5 +1,5 @@
 {
-  "name": "@k6-contrib/fields-s3",
+  "name": "@skeary/fields-s3",
   "description": "Keystone6 S3 File and Image Field Type",
   "version": "1.0.0",
   "author": "The KeystoneJS Contrib Development Team",
@@ -40,7 +40,10 @@
     "graphql-upload": "^13.0.0",
     "react": "^17.0.2"
   },
-  "repository": "https://github.com/keystonejs-contrib/k6-contrib/tree/master/packages/fields-s3",
+  "repository": "https://github.com/skeary/k6-contrib/tree/master/packages/fields-s3",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@keystone-6/core": "^1.0.0",
     "@types/bytes": "^3.1.1",
